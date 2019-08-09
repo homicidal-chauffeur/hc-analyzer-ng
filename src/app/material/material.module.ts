@@ -22,6 +22,20 @@ import {MatDatepickerModule, MatDialogModule, MatDividerModule,
     MatOptionModule,
     MatRadioModule,
     MatSelectModule, MatSnackBarModule
+  ],
+  exports: [
+    CommonModule,
+
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatOptionModule,
+    MatRadioModule,
+    MatSelectModule, MatSnackBarModule
+
   ]
 })
 export class MaterialModule { }

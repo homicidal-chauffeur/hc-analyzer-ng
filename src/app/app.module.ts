@@ -8,6 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/pro-regular-svg-icons';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {AnalyzerModule} from './analyzer/analyzer.module';
+import {NlFontawesomeModule} from '@nextlogic/fontawesome';
 
 library.add(far);
 
@@ -19,7 +23,12 @@ library.add(far);
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FontAwesomeModule
+    NlFontawesomeModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+
+    AnalyzerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

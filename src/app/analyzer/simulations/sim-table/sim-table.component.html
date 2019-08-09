@@ -1,0 +1,52 @@
+<div class="table-responsive">
+  <table class="table table-striped"
+         infiniteScroll
+         [infiniteScrollDistance]="2"
+         [infiniteScrollThrottle]="300"
+         (scrolled)="onScroll()">
+    <thead>
+    <tr>
+      <th style="width: 50px;"></th>
+      <th>Date</th>
+      <th>Tags</th>
+      <th class="text-right">Gamma</th>
+      <th class="text-right">Beta</th>
+      <th class="text-right">Max P Velocity</th>
+      <th class="text-right">Game Time</th>
+      <th class="text-right">Captures Count</th>
+      <th class="text-right">First Capture Time</th>
+      <th class="text-center">Pilots</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of rows" >
+      <td>
+        <a [routerLink]="['/simulations', item.id, 'edit']" title="View Simulation">
+          <fa-icon icon="file-edit"></fa-icon>
+        </a>
+      </td>
+      <td>
+        {{item.date_at | date: 'short' }}
+      </td>
+      <td>{{ item.tags }}</td>
+      <td class="text-right">{{ item.gamma }}</td>
+      <td class="text-right">{{ item.beta }}</td>
+      <td class="text-right">{{ item.max_velocity_pursuer }}</td>
+      <td class="text-right">{{ item.game_time }}</td>
+      <td class="text-right">{{ item.captures_count }}</td>
+      <td class="text-right">{{ item.first_capture }}</td>
+      <td>
+        <table class="table table-striped">
+          <tr *ngFor="let ps of item.pilot_settings">
+            <td>{{ ps.name }}</td>
+            <td>{{ ps.pilot_strategy }}</td>
+<!--            <td>{{ ps.velocity_type }}</td>-->
+            <td class="text-right">Radius: {{ ps.turning_radius }}</td>
+            <td class="text-right">Delay: {{ ps.pilot_delay }}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

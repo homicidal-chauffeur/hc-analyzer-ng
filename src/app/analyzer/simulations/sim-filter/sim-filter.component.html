@@ -1,0 +1,46 @@
+<form [formGroup]="form">
+  <div class="card mb-3">
+    <div class="card-header">
+      Search for Simulations
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <mat-form-field class="col col-sm-4">
+          <mat-label>Tags</mat-label>
+          <input matInput formControlName="tags">
+        </mat-form-field>
+
+        <mat-form-field class="col col-sm-4">
+          <input matInput [matDatepicker]="dateFromPicker"
+                 placeholder="Date From" formControlName="dateFrom"
+          >
+          <mat-datepicker-toggle matSuffix [for]="dateFromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dateFromPicker disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="col col-sm-4">
+          <input matInput [matDatepicker]="dateToPicker"
+                 placeholder="Date To" formControlName="dateTo"
+          >
+          <mat-datepicker-toggle matSuffix [for]="dateToPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dateToPicker disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+
+      <div class="row">
+        <div class="col text-right">
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="submit" class="btn btn-primary " (click)="searchClicked()">
+              <fa-icon [icon]="['far', 'search']"></fa-icon>
+              Search
+              <fa-icon icon="spinner" [pulse]="true" *ngIf="loading"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</form>
