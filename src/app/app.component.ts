@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {FaIconService} from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'hc-analyzer-ng';
+  constructor(faIconService: FaIconService) {
+    faIconService.defaultPrefix = 'far';
+  }
 }
