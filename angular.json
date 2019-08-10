@@ -17,7 +17,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/hc-analyzer-ng",
+            "baseHref": "/hc-analyzer/",
+            "deployUrl": "/hc-analyzer/",
+
+            "outputPath": "dist/hc-analyzer",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",

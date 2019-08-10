@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+
+  baseUrl: 'https://apps.nextlogic.net/hc-analyzer-api/',
 };

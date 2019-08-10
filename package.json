@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod; ssh nl2n 'rm -rf rails/rails_apps/hc-analyzer'; scp -r dist/hc-analyzer nl2n:rails/rails_apps/hc-analyzer;",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

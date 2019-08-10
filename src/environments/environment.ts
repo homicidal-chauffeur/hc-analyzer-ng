@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
 
-  baseUrl: 'http://localhost:9036/hc-analyzer/',
+  baseUrl0: 'http://localhost:9036/hc-analyzer-api/',
+  baseUrl: 'https://apps.nextlogic.net/hc-analyzer-api/',
 };
 
 /*
