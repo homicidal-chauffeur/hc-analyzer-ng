@@ -91,7 +91,8 @@ export class AnimationComponent implements OnInit {
   updateAnimation(m: Move) {
     const theta = m.my_theta * (180 / Math.PI);
     this.pilotTransformations[m.name] =
-      `translate(${m.my_position.x * this.initScale}, ${m.my_position.y * this.initScale}), rotate(${theta}, 12, 12)`;
+      `translate(${m.my_position.x * this.initScale - this.planeSize}, ${m.my_position.y * this.initScale - this.planeSize})
+       rotate(${theta}, 12, 12)`;
     this.trajectories[m.name] += ` ${m.my_position.x *  this.initScale}, ${m.my_position.y *  this.initScale} `;
 
     this.updateLastMove(m);
