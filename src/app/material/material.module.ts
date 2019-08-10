@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatDatepickerModule, MatDialogModule, MatDividerModule,
+import {
+  MatDatepickerModule, MatDialogModule, MatDividerModule,
   MatFormFieldModule,
   MatInputModule,
   MatNativeDateModule,
   MatOptionModule,
   MatRadioModule,
-  MatSelectModule, MatSnackBarModule} from '@angular/material';
+  MatSelectModule, MatSliderModule, MatSnackBarModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -21,7 +23,9 @@ import {MatDatepickerModule, MatDialogModule, MatDividerModule,
     MatNativeDateModule,
     MatOptionModule,
     MatRadioModule,
-    MatSelectModule, MatSnackBarModule
+    MatSelectModule,
+    MatSnackBarModule,
+    MatSliderModule
   ],
   exports: [
     CommonModule,
@@ -34,7 +38,9 @@ import {MatDatepickerModule, MatDialogModule, MatDividerModule,
     MatNativeDateModule,
     MatOptionModule,
     MatRadioModule,
-    MatSelectModule, MatSnackBarModule
+    MatSelectModule,
+    MatSnackBarModule,
+    MatSliderModule
 
   ]
 })

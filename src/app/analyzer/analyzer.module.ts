@@ -8,9 +8,12 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {AnalyzerRoutingModule} from './analyzer-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import { SimulationComponent } from './simulation/simulation.component';
+import { SettingsComponent } from './simulation/settings/settings.component';
+import { AnimationComponent } from './simulation/animation/animation.component';
 
 @NgModule({
-  declarations: [SimulationsComponent, SimFilterComponent, SimTableComponent],
+  declarations: [SimulationsComponent, SimFilterComponent, SimTableComponent, SimulationComponent, SettingsComponent, AnimationComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

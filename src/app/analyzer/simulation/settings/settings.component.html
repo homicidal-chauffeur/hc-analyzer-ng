@@ -1,0 +1,52 @@
+<div *ngIf="simulation" class="card">
+  <div class="card-header">
+    <h5>Simulation:</h5>
+    <table class="table">
+      <tr>
+        <th>Date:</th>
+        <td>{{ simulation.date_at | date:'medium' }}</td>
+        <th>Gamma:</th>
+        <td>{{ simulation.gamma }}</td>
+        <th>Beta:</th>
+        <td>{{ simulation.beta }}</td>
+        <th>Max P Velocity:</th>
+        <td>{{ simulation.max_velocity_pursuer }}</td>
+      </tr>
+      <tr>
+        <th>Game Time:</th>
+        <td>{{ simulation.game_time }}s</td>
+        <th>Captures Count:</th>
+        <td>{{ simulation.captures_count }}</td>
+        <th>First Capture:</th>
+        <td>{{ simulation.first_capture }}</td>
+        <th></th>
+        <td></td>
+      </tr>
+      <tr>
+        <th>Tags:</th>
+        <td colspan="7">{{ simulation.tags }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="card-body">
+    <h5>Pilots:</h5>
+    <table class="table table-striped">
+      <thead>
+      <th>Type</th>
+      <th>Strategy</th>
+      <th>Velocity</th>
+      <th class="text-right">Turning Radius</th>
+      <th class="text-right">Pilot Delay</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let ps of simulation.pilot_settings">
+        <td>{{ ps.action_type }}</td>
+        <td>{{ ps.pilot_strategy }}</td>
+        <td>{{ ps.velicity_type }}</td>
+        <td class="text-right">{{ ps.turning_radius }}</td>
+        <td class="text-right">{{ ps.pilot_delay }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

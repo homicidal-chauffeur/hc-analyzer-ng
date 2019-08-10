@@ -1,0 +1,12 @@
+<div class="alert alert-info" *ngIf="loading">
+  <span *ngIf="loading"><fa-icon icon="spinner" [pulse]="true"></fa-icon></span>
+  Loading simulation data...
+</div>
+<div class="alert alert-danger" *ngIf="error">
+  {{ error }}
+</div>
+
+<div *ngIf="simulation">
+  <app-settings [simulation]="simulation"></app-settings>
+  <app-animation [simulation]="simulation"></app-animation>
+</div>

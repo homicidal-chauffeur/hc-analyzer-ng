@@ -16,6 +16,12 @@ export class SimulationsService {
       `${environment.baseUrl}simulations/search?page=${page}`, filter
     );
   }
+
+  simulation(id: number): Observable<Simulation> {
+    return this.http.get<Simulation>(
+      `${environment.baseUrl}simulations/${id}`
+    );
+  }
 }
 
 export interface SimulationFilter {
@@ -71,6 +77,8 @@ export interface Simulation {
   max_velocity_pursuer: number;
   location_update_delay: number;
   game_time: number;
+  captures_count: number;
+  first_capture: number;
 
   pilot_settings: PilotSettings[];
   captures: Capture[];
@@ -86,6 +94,8 @@ export interface SimulationPreview {
   max_velocity_pursuer: number;
   location_update_delay: number;
   game_time: number;
+  captures_count: number;
+  first_capture: number;
 
   pilot_settings: PilotSettings[];
 }
