@@ -12,12 +12,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AnalyzerModule} from './analyzer/analyzer.module';
 import {NlFontawesomeModule} from '@nextlogic/fontawesome';
+import { TopMenuComponent } from './top-menu/top-menu.component';
 
 library.add(far);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TopMenuComponent
   ],
   imports: [
     BrowserModule,
