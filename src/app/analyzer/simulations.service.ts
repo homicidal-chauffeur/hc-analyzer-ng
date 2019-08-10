@@ -22,6 +22,13 @@ export class SimulationsService {
       `${environment.baseUrl}simulations/${id}`
     );
   }
+
+  updateTags(id: number, tags: string): Observable<string> {
+    return this.http.post<string>(
+      `${environment.baseUrl}simulations/${id}/update_tags`,
+      { id, tags }
+    );
+  }
 }
 
 export interface SimulationFilter {

@@ -1,6 +1,6 @@
 <div class="alert alert-info" *ngIf="loading">
   <fa-icon icon="spinner" [pulse]="true"></fa-icon>
-  Loading ballots...
+  Loading simulations...
 </div>
 
 <app-sim-filter class="mt-3" (valueChanged)="loadData($event)" [loading]="loading"></app-sim-filter>
