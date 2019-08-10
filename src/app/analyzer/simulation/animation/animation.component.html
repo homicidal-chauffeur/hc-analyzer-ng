@@ -8,16 +8,25 @@
     Pause Simulation
   </button>
   <button class="btn btn-danger"
-          (click)="reset()">
+          (click)="resetSimulation()">
     Reset Simulation
   </button>
 </div>
 
-<div [hidden]="true">
+<div class="form-group">
+  <label>Animation Speed:</label>
+  <mat-slider thumbLabel="true" tickInterval="auto" max="100"
+              class="col-4"
+              step="1" [(value)]="delay"></mat-slider>
+</div>
+
+
+<div class="form-group" [formGroup]="form">
+  <label class="mr-2">Progress:</label>
   <mat-slider thumbLabel="true" tickInterval="auto" [max]="steps" step="1"
               (input)="move()"
-              [(value)]="currentStep"
-              style="width: 600px;"></mat-slider>
+              formControlName="slider"
+              class="col-8"></mat-slider>
 </div>
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700"

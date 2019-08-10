@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Move, Simulation} from '../../simulations.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-animation',
@@ -8,6 +9,7 @@ import {Move, Simulation} from '../../simulations.service';
 })
 export class AnimationComponent implements OnInit {
   @Input() simulation: Simulation;
+  form: FormGroup;
   steps = 0;
   currentStep = 0;
   time = 0;
@@ -23,11 +25,14 @@ export class AnimationComponent implements OnInit {
   planeSize = 12;
   distance = -1;
 
+  delay = 10;
+
   captureDistance = 1;
 
   lastMoves = {};
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
+    this.buildForm();
   }
 
   ngOnInit() {
@@ -44,8 +49,8 @@ export class AnimationComponent implements OnInit {
   }
 
   start() {
-    if (this.currentStep === 0) {
-      this.reset();
+    if (this.currentStep === this.steps) {
+      this.resetSimulation();
     }
 
     this.paused = false;
@@ -58,24 +63,44 @@ export class AnimationComponent implements OnInit {
     }
     const m = this.simulation.moves[this.currentStep];
     this.currentStep += 1;
+    this.updateAnimation(m);
+
+    if (this.currentStep >= this.steps) {
+      this.paused = true;
+    } else {
+      setTimeout(() => this.move(), this.delay);
+    }
+  }
+
+  moveUntil(step: number) {
+    let range = 0;
+    if (step > this.currentStep) {
+      range = step - this.currentStep;
+    } else {
+      range = step;
+      this.reset();
+    }
+    Array.from(Array(range).keys()).forEach(_ => {
+      this.currentStep += 1;
+      const m = this.simulation.moves[this.currentStep];
+      this.updateAnimation(m);
+    });
+
+  }
+
+  updateAnimation(m: Move) {
     const theta = m.my_theta * (180 / Math.PI);
     this.pilotTransformations[m.name] =
       `translate(${m.my_position.x * this.initScale}, ${m.my_position.y * this.initScale}), rotate(${theta}, 12, 12)`;
     this.trajectories[m.name] += ` ${m.my_position.x *  this.initScale}, ${m.my_position.y *  this.initScale} `;
 
     this.updateLastMove(m);
-
-    if (this.currentStep >= this.steps) {
-      this.paused = true;
-      this.currentStep = 0;
-    } else {
-      setTimeout(() => this.move(), 10);
-    }
   }
 
   updateLastMove(m: Move) {
     this.lastMoves[m.name] = m;
     this.time = m.time;
+    this.form.controls.slider.setValue(this.currentStep);
 
     this.updateDistance( );
   }
@@ -93,6 +118,11 @@ export class AnimationComponent implements OnInit {
 
   pause() {
     this.paused = true;
+  }
+
+  resetSimulation() {
+    this.reset();
+    this.form.controls.slider.setValue(0);
   }
 
   reset() {
@@ -122,5 +152,18 @@ export class AnimationComponent implements OnInit {
 
   round(num: number): number {
     return Math.round(num * 1000) / 1000;
+  }
+
+  buildForm() {
+    this.form = this.fb.group({
+      slider: [0]
+    });
+
+    this.form.controls.slider.valueChanges
+      .subscribe(v => {
+        if (v !== this.currentStep) {
+          this.moveUntil(v);
+        }
+      });
   }
 }

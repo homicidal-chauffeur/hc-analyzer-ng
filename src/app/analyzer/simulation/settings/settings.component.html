@@ -19,8 +19,8 @@
         <td>{{ simulation.captures_count }}</td>
         <th>First Capture:</th>
         <td>{{ simulation.first_capture }}</td>
-        <th></th>
-        <td></td>
+        <th>Capture Distance:</th>
+        <td>{{ captureDistance }}</td>
       </tr>
       <tr>
         <th>Tags:</th>
@@ -42,7 +42,7 @@
       <tr *ngFor="let ps of simulation.pilot_settings">
         <td>{{ ps.action_type }}</td>
         <td>{{ ps.pilot_strategy }}</td>
-        <td>{{ ps.velicity_type }}</td>
+        <td>{{ ps.velocity_type }}</td>
         <td class="text-right">{{ ps.turning_radius }}</td>
         <td class="text-right">{{ ps.pilot_delay }}</td>
       </tr>

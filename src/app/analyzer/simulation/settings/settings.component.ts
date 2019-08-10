@@ -8,10 +8,13 @@ import {Simulation} from '../../simulations.service';
 })
 export class SettingsComponent implements OnInit {
   @Input() simulation: Simulation;
+  captureDistance = 0;
 
   constructor() { }
 
   ngOnInit() {
+    this.captureDistance =
+      this.simulation.beta * this.simulation.pilot_settings.filter(ps => ps.action_type === 'Pursue')[0].turning_radius;
   }
 
 }

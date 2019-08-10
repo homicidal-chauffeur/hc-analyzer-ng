@@ -34,7 +34,7 @@ export interface PilotSettings {
   name: string;
   action_type: string;
   pilot_strategy: string;
-  velicity_type: string;
+  velocity_type: string;
   turning_radius: number;
   pilot_delay: number;
 }
