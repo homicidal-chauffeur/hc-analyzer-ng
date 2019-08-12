@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Move, Simulation} from '../../simulations.service';
+import {Move, Simulation, Vector3r} from '../../simulations.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
@@ -21,6 +21,9 @@ export class AnimationComponent implements OnInit {
 
   svgHeight = 700;
   svgWidth = 1200;
+
+  viewBox = `0 0 ${this.svgWidth} ${this.svgHeight}`;
+
   offset = 10;
   planeSize = 12;
   distance = -1;
@@ -91,7 +94,7 @@ export class AnimationComponent implements OnInit {
   updateAnimation(m: Move) {
     const theta = m.my_theta * (180 / Math.PI);
     this.pilotTransformations[m.name] =
-      `translate(${m.my_position.x * this.initScale - this.planeSize}, ${m.my_position.y * this.initScale - this.planeSize})
+      `translate(${m.my_position.x * this.initScale - this.planeSize} ${m.my_position.y * this.initScale - this.planeSize})
        rotate(${theta}, 12, 12)`;
     this.trajectories[m.name] += ` ${m.my_position.x *  this.initScale}, ${m.my_position.y *  this.initScale} `;
 
@@ -133,13 +136,17 @@ export class AnimationComponent implements OnInit {
   }
 
   calculateTransformation(): string {
-    const maxX = Math.max(...this.simulation.moves.map(m => m.my_position.x)) *  this.initScale;
-    const minX = Math.min(...this.simulation.moves.map(m => m.my_position.x)) *  this.initScale;
-    const maxY = Math.max(...this.simulation.moves.map(m => m.my_position.y)) *  this.initScale;
-    const minY = Math.min(...this.simulation.moves.map(m => m.my_position.y)) *  this.initScale;
+    const [maxX, minX, maxY, minY] = this.minMaxCoordinates();
 
-    const width = maxX - minX;
-    const height = maxY - minY;
+    const initWidth = maxX - minX;
+    const initHeight = maxY - minY;
+
+    this.initScale = Math.min(this.svgWidth / initWidth, this.svgHeight / initHeight);
+
+    const width = initWidth * this.initScale;
+    const height = initHeight * this.initScale;
+
+    // this.viewBox = `${minX} ${minY} ${width} ${height}`;
 
     const canvasHeight = this.svgHeight - 2 * this.offset;
     const canvasWidth = this.svgWidth - 2 * this.offset;
@@ -148,7 +155,16 @@ export class AnimationComponent implements OnInit {
 
     const scale = (scaleH < 1 || scaleW < 1)  ? Math.min(scaleH, scaleW) : 1;
 
-    return `translate(${-minX * scale + this.offset} ${-minY * scale + this.offset}) scale(${scale} ${scale}) `;
+    return `translate(${-minX * this.initScale * scale + this.offset} ${-minY * this.initScale * scale + this.offset}) scale(${scale} ${scale}) `;
+  }
+
+  minMaxCoordinates(): number[] {
+    const maxX = Math.max(...this.simulation.moves.map(m => m.my_position.x));
+    const minX = Math.min(...this.simulation.moves.map(m => m.my_position.x));
+    const maxY = Math.max(...this.simulation.moves.map(m => m.my_position.y));
+    const minY = Math.min(...this.simulation.moves.map(m => m.my_position.y));
+
+    return [maxX, minX, maxY, minY];
   }
 
   round(num: number): number {
