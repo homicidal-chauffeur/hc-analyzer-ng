@@ -17,7 +17,7 @@ export class AnimationComponent implements OnInit {
   trajectories = {};
   paused = true;
   trajTransformation = '';
-  initScale = 20;
+  scale = 20;
 
   svgHeight = 700;
   svgWidth = 1200;
@@ -45,7 +45,7 @@ export class AnimationComponent implements OnInit {
       this.trajectories[p.name] = '';
     });
 
-    this.trajTransformation = this.calculateTransformation();
+    this.calculateScaleAndCenter();
 
     this.captureDistance =
       this.simulation.beta * this.simulation.pilot_settings.filter(ps => ps.action_type === 'Pursue')[0].turning_radius;
@@ -94,9 +94,9 @@ export class AnimationComponent implements OnInit {
   updateAnimation(m: Move) {
     const theta = m.my_theta * (180 / Math.PI);
     this.pilotTransformations[m.name] =
-      `translate(${m.my_position.x * this.initScale - this.planeSize} ${m.my_position.y * this.initScale - this.planeSize})
+      `translate(${m.my_position.x * this.scale - this.planeSize} ${m.my_position.y * this.scale - this.planeSize})
        rotate(${theta}, 12, 12)`;
-    this.trajectories[m.name] += ` ${m.my_position.x *  this.initScale}, ${m.my_position.y *  this.initScale} `;
+    this.trajectories[m.name] += ` ${m.my_position.x *  this.scale}, ${m.my_position.y *  this.scale} `;
 
     this.updateLastMove(m);
   }
@@ -135,30 +135,23 @@ export class AnimationComponent implements OnInit {
     this.currentStep = 0;
   }
 
-  calculateTransformation(): string {
-    const [maxX, minX, maxY, minY] = this.minMaxCoordinates();
+  calculateScaleAndCenter() {
+    const [maxX, minX, maxY, minY] = this.boundingRectangle();
 
     const initWidth = maxX - minX;
     const initHeight = maxY - minY;
 
-    this.initScale = Math.min(this.svgWidth / initWidth, this.svgHeight / initHeight);
-
-    const width = initWidth * this.initScale;
-    const height = initHeight * this.initScale;
-
-    // this.viewBox = `${minX} ${minY} ${width} ${height}`;
-
     const canvasHeight = this.svgHeight - 2 * this.offset;
     const canvasWidth = this.svgWidth - 2 * this.offset;
-    const scaleH = (height > canvasHeight) ? canvasHeight / height : 1;
-    const scaleW = (width > canvasWidth) ? canvasWidth / width : 1;
 
-    const scale = (scaleH < 1 || scaleW < 1)  ? Math.min(scaleH, scaleW) : 1;
+    this.scale = Math.min(canvasWidth / initWidth, canvasHeight / initHeight);
 
-    return `translate(${-minX * this.initScale * scale + this.offset} ${-minY * this.initScale * scale + this.offset}) scale(${scale} ${scale}) `;
+    // this.viewBox = `${minX - this.offset} ${minY - this.offset} ${this.svgWidth} ${this.svgHeight}`;
+
+    this.trajTransformation = `translate(${-minX * this.scale + this.offset} ${-minY * this.scale + this.offset})`;
   }
 
-  minMaxCoordinates(): number[] {
+  boundingRectangle(): number[] {
     const maxX = Math.max(...this.simulation.moves.map(m => m.my_position.x));
     const minX = Math.min(...this.simulation.moves.map(m => m.my_position.x));
     const maxY = Math.max(...this.simulation.moves.map(m => m.my_position.y));
